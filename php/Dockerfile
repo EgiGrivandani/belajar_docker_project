@@ -26,9 +26,6 @@ RUN pecl install redis \
 # Hapus build deps biar image kecil
 RUN apk del .build-deps
 
-# OPcache config
-COPY php/php.ini /usr/local/etc/php/conf.d/opcache.ini
-
 # Working directory
 WORKDIR /var/www/html
 
