@@ -17,6 +17,8 @@ services:
       dockerfile: php/Dockerfile
     volumes:
       - ./app:/var/www/html
+      - ./php/php-fpm.conf:/usr/local/etc/php-fpm.d/zz-custom.con
+      - ./php/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
     environment:
       APP_ENV: development
       APP_BASE_URL: ${APP_BASE_URL}
