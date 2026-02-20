@@ -18,10 +18,4 @@ class Welcome extends CI_Controller {
 		echo phpinfo();
 	}
 
-	public function fpm_jebol()
-	{
-		sleep(5); // tahan 1 worker selama 20 detik
-		echo "done";
-	}
-
 }
