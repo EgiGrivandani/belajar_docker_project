@@ -8,7 +8,7 @@ $autoload['libraries'] = array('database');
 
 $autoload['drivers'] = array();
 
-$autoload['helper'] = array('url');
+$autoload['helper'] = array('url', 'jwt');
 
 $autoload['config'] = array();
 

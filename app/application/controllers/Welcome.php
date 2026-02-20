@@ -3,7 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
-	public function index()
+	public function index(){
+		echo 'Welcome to Welcome page';
+	}
+
+	public function redis()
 	{
 		$start = microtime(true);
 		$redis = new Redis();
@@ -12,6 +16,14 @@ class Welcome extends CI_Controller {
 		$end = microtime(true);
 		$totalMs = ($end - $start) * 1000;
 		echo "Total: " . number_format($totalMs, 2) . " ms\n";
+	}
+
+	public function jwt(){
+		$token = jwt_encode([
+			'uid' => 1,
+			'email' => "testjwt@gmail.com"
+		]);
+		echo $token;
 	}
 
 	public function info(){

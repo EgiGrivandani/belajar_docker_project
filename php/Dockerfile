@@ -1,35 +1,57 @@
 FROM php:8.1-fpm-alpine
 
-# Install runtime deps
+# --------------------
+# System & build deps
+# --------------------
 RUN apk add --no-cache \
     bash \
     curl \
-    libzip-dev \
-    oniguruma-dev
+    git \
+    unzip \
+    oniguruma-dev \
+    libzip-dev
 
-# Install build deps (KHUSUS build extension)
 RUN apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
     linux-headers
 
-# PHP extensions (CI3 common)
+# --------------------
+# PHP extensions
+# --------------------
 RUN docker-php-ext-install \
     mysqli \
     pdo \
     pdo_mysql \
+    mbstring \
+    zip \
     opcache
 
-# PHP redis
+# Redis extension
 RUN pecl install redis \
     && docker-php-ext-enable redis
 
-# Hapus build deps biar image kecil
+# Cleanup build deps
 RUN apk del .build-deps
 
-# Working directory
-WORKDIR /var/www/html
+# --------------------
+# Composer
+# --------------------
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Permission (CI3)
-RUN chown -R www-data:www-data /var/www/html
+# --------------------
+# App setup
+# --------------------
+WORKDIR /var/www/app
 
+# Install dependencies (cache-friendly)
+COPY app/composer.json ./
+RUN composer install --no-dev --optimize-autoloader
+
+# Copy application source
+COPY app/ ./
+
+# Permission
+RUN chown -R www-data:www-data /var/www/app
+
+# Runtime user
 USER www-data
