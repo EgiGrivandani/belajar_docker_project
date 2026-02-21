@@ -48,7 +48,7 @@ COPY app/composer.json ./
 RUN composer install --no-dev --optimize-autoloader
 
 # Copy application source
-COPY app/ ./
+# COPY app/ ./
 
 # Permission
 RUN chown -R www-data:www-data /var/www/app

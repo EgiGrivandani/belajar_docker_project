@@ -24,6 +24,7 @@ class Welcome extends CI_Controller {
 			'email' => "testjwt@gmail.com"
 		]);
 		echo $token;
+
 	}
 
 	public function info(){
