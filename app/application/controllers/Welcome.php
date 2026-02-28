@@ -31,8 +31,6 @@ class Welcome extends CI_Controller {
 		$this->load->library('session');
 		$this->session->set_userdata('test', 'Redis OK');
 		echo $this->session->userdata('test');
-
-
 	}
 
 	public function info(){
